@@ -2,44 +2,60 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using FishNet.Object;
-using FishNet.Connection;
 
 public class PlayerShoot : NetworkBehaviour
 {
-    public int damage;
-    public float timeBetweenFire;
-    float fireTimer;
+    [SerializeField] int damage = 5;
+    [SerializeField] float fireRate = 0.3f;
+    [SerializeField] KeyCode shootKey = KeyCode.Mouse0;
+    [SerializeField] LayerMask playerLayer;
 
+    bool canShoot = true;
+    WaitForSeconds shootWait;
+
+    public override void OnStartClient()
+    {
+        base.OnStartClient();
+
+        if (!base.IsOwner)
+            return;
+
+        shootWait = new WaitForSeconds(fireRate);
+    }
 
     private void Update()
     {
         if (!base.IsOwner)
             return;
 
-        if(Input.GetButton("Fire1"))
-        {
-            if(fireTimer <= 0)
-            {
-                Shoot();
-                fireTimer = timeBetweenFire;
-            }
-        }
+        //
 
-        if (fireTimer > 0)
-            fireTimer -= Time.deltaTime;
+        if (Input.GetKey(shootKey) && canShoot)
+            Shoot();
     }
 
-    private void Shoot()
+    void Shoot()
     {
-        ShootServer(damage, Camera.main.transform.position, Camera.main.transform.forward);
+        if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit, Mathf.Infinity, playerLayer))
+        {
+            HitPlayer(hit.transform.gameObject);
+        }
+
+        StartCoroutine(CanShootUpdater());
     }
 
     [ServerRpc(RequireOwnership = false)]
-    private void ShootServer(int damageToGive, Vector3 position, Vector3 direction)
+    void HitPlayer(GameObject playerHit)
     {
-        if (Physics.Raycast(position, direction, out RaycastHit hit) && hit.transform.TryGetComponent(out PlayerHealth enemyHealth))
-        {
-            enemyHealth.health -= damageToGive;
-        }
+        PlayerManager.instance.DamagePlayer(playerHit.GetInstanceID(), damage, gameObject.GetInstanceID());
+    }
+
+    IEnumerator CanShootUpdater()
+    {
+        canShoot = false;
+
+        yield return shootWait;
+
+        canShoot = true;
     }
 }

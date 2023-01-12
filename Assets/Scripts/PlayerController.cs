@@ -4,6 +4,7 @@ using UnityEngine;
 using FishNet.Connection;
 using FishNet.Object;
 
+//This is made by Bobsi Unity - Youtube
 public class PlayerController : NetworkBehaviour
 {
     [Header("Base setup")]
@@ -21,14 +22,19 @@ public class PlayerController : NetworkBehaviour
     [HideInInspector]
     public bool canMove = true;
 
-    [SerializeField]
-    private float cameraYOffset = 0.4f;
+    [SerializeField] private float cameraYOffset = 0.4f;
     private Camera playerCamera;
+    [HideInInspector] public bool respawning;
 
 
     public override void OnStartClient()
     {
         base.OnStartClient();
+        if (base.IsServer)
+        {
+            PlayerManager.instance.players.Add(gameObject.GetInstanceID(), new PlayerManager.Player() { health = 100, playerObject = gameObject, connection = GetComponent<NetworkObject>().Owner });
+        }
+
         if (base.IsOwner)
         {
             playerCamera = Camera.main;
@@ -81,6 +87,7 @@ public class PlayerController : NetworkBehaviour
         }
 
         // Move the controller
+        Physics.SyncTransforms();
         characterController.Move(moveDirection * Time.deltaTime);
 
         // Player and Camera rotation
@@ -93,3 +100,4 @@ public class PlayerController : NetworkBehaviour
         }
     }
 }
+
