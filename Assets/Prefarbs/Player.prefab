@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 2498382751831360015}
   - component: {fileID: 2034123182197673624}
   - component: {fileID: 744968814315989525}
+  - component: {fileID: 5854345230141030925}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -78,6 +79,8 @@ MonoBehaviour:
   - {fileID: 4168208449473310801}
   - {fileID: 2498382751831360015}
   - {fileID: 2034123182197673624}
+  - {fileID: 744968814315989525}
+  - {fileID: 5854345230141030925}
   <ParentNetworkObject>k__BackingField: {fileID: 0}
   <ChildNetworkObjects>k__BackingField: []
   _isNetworked: 1
@@ -216,6 +219,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0488486f309ec9e4487bcdd0924880c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 4
+  _addedNetworkObject: {fileID: 2876301395137967718}
+  _networkObjectCache: {fileID: 2876301395137967718}
+  health: 100
+--- !u!114 &5854345230141030925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2876301395137967719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dfe3061cdb7f464dbb7f2b5eafcdd09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 5
+  _addedNetworkObject: {fileID: 2876301395137967718}
+  _networkObjectCache: {fileID: 2876301395137967718}
+  damage: 10
+  timeBetweenFire: 3
 --- !u!1 &2876301396448975042
 GameObject:
   m_ObjectHideFlags: 0
@@ -227,7 +251,6 @@ GameObject:
   - component: {fileID: 2876301396448975045}
   - component: {fileID: 2876301396448975046}
   - component: {fileID: 2876301396448975047}
-  - component: {fileID: 2876301396448975044}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -300,20 +323,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &2876301396448975044
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2876301396448975042}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3362352194859174730
 GameObject:
   m_ObjectHideFlags: 0
@@ -325,7 +334,6 @@ GameObject:
   - component: {fileID: 4821151450878900807}
   - component: {fileID: 1224662474074797318}
   - component: {fileID: 1967140761256484341}
-  - component: {fileID: 9149925079740893245}
   m_Layer: 0
   m_Name: Visor
   m_TagString: Untagged
@@ -398,16 +406,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &9149925079740893245
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3362352194859174730}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}

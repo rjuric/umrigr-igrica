@@ -1,31 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using FishNet.Object;
 using FishNet.Object.Synchronizing;
+using FishNet.Object;
+using TMPro;
 
 public class PlayerHealth : NetworkBehaviour
 {
     [SyncVar] public int health = 100;
+    private TextMeshProUGUI healthText;
 
-    public override void OnStartClient()
+    private void Start()
     {
-        base.OnStartClient();
-        if (!base.IsOwner)
-              GetComponent<PlayerHealth>().enabled = false;
+        healthText = GameObject.FindGameObjectWithTag("HealthText").GetComponent<TextMeshProUGUI>();
     }
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.R))
-        {
-            UpdateHealth(this, -1);
-        }
-    }
+        if (!base.IsOwner)
+            return;
 
-    [ServerRpc]
-    public void UpdateHealth(PlayerHealth script, int amountToChange) 
-    {
-        script.health += amountToChange;
+        healthText.text = health.ToString();
     }
 }
