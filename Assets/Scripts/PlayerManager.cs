@@ -19,11 +19,11 @@ public class PlayerManager : NetworkBehaviour
     {
         if (!base.IsServer)
             return;
-
-        players[playerID].health -= damage;
+        int calculatedDamage = damage +  Random.Range(0, damage);
+        players[playerID].health -= calculatedDamage;
         print("Player " + playerID.ToString() + " health is " + players[playerID].health);
 
-        enemyHealth.health -= damage;
+        enemyHealth.health -= calculatedDamage;
 
         if (players[playerID].health <= 0)
         {
