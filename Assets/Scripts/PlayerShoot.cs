@@ -36,18 +36,19 @@ public class PlayerShoot : NetworkBehaviour
 
     void Shoot()
     {
-        if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit, Mathf.Infinity, playerLayer))
+        if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit, Mathf.Infinity, playerLayer) && hit.transform.TryGetComponent(out PlayerHealth enemyHealth))
         {
-            HitPlayer(hit.transform.gameObject);
+            HitPlayer(hit.transform.gameObject, enemyHealth);
+
         }
 
         StartCoroutine(CanShootUpdater());
     }
 
     [ServerRpc(RequireOwnership = false)]
-    void HitPlayer(GameObject playerHit)
+    void HitPlayer(GameObject playerHit, PlayerHealth enemyHealth)
     {
-        PlayerManager.instance.DamagePlayer(playerHit.GetInstanceID(), damage, gameObject.GetInstanceID());
+        PlayerManager.instance.DamagePlayer(playerHit.GetInstanceID(), damage, gameObject.GetInstanceID(), enemyHealth, gameObject.GetComponent<PlayerKills>());
     }
 
     IEnumerator CanShootUpdater()

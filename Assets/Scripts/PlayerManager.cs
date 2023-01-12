@@ -15,7 +15,7 @@ public class PlayerManager : NetworkBehaviour
     public Dictionary<int, Player> players = new Dictionary<int, Player>();
     [SerializeField] List<Transform> spawnPoints = new List<Transform>();
 
-    public void DamagePlayer(int playerID, int damage, int attackerID)
+    public void DamagePlayer(int playerID, int damage, int attackerID, PlayerHealth enemyHealth, PlayerKills playerKills)
     {
         if (!base.IsServer)
             return;
@@ -23,9 +23,13 @@ public class PlayerManager : NetworkBehaviour
         players[playerID].health -= damage;
         print("Player " + playerID.ToString() + " health is " + players[playerID].health);
 
+        enemyHealth.health -= damage;
+
         if (players[playerID].health <= 0)
         {
             PlayerKilled(playerID, attackerID);
+            enemyHealth.health = 100;
+            playerKills.kills += 1;
         }
     }
 

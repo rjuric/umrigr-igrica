@@ -20,6 +20,6 @@ public class PlayerHealth : NetworkBehaviour
         if (!base.IsOwner)
             return;
 
-        healthText.text = health.ToString();
+        healthText.text = "Health : " + health.ToString();
     }
 }
