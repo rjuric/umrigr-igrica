@@ -33,6 +33,7 @@ public class PlayerController : NetworkBehaviour
         if (base.IsServer)
         {
             PlayerManager.instance.players.Add(gameObject.GetInstanceID(), new PlayerManager.Player() { health = 100, playerObject = gameObject, connection = GetComponent<NetworkObject>().Owner });
+            print("Player with id: " + gameObject.GetInstanceID() + " spawned.");
         }
 
         if (base.IsOwner)
