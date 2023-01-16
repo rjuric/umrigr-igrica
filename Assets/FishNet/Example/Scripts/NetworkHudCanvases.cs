@@ -144,8 +144,8 @@ public class NetworkHudCanvases : MonoBehaviour
         }
         else
         {
-            UpdateColor(LocalConnectionState.Stopped, ref _serverIndicator);
-            UpdateColor(LocalConnectionState.Stopped, ref _clientIndicator);
+//            UpdateColor(LocalConnectionState.Stopped, ref _serverIndicator);
+//            UpdateColor(LocalConnectionState.Stopped, ref _clientIndicator);
             _networkManager.ServerManager.OnServerConnectionState += ServerManager_OnServerConnectionState;
             _networkManager.ClientManager.OnClientConnectionState += ClientManager_OnClientConnectionState;
         }
@@ -188,14 +188,14 @@ public class NetworkHudCanvases : MonoBehaviour
     private void ClientManager_OnClientConnectionState(ClientConnectionStateArgs obj)
     {
         _clientState = obj.ConnectionState;
-        UpdateColor(obj.ConnectionState, ref _clientIndicator);
+//        UpdateColor(obj.ConnectionState, ref _clientIndicator);
     }
 
 
     private void ServerManager_OnServerConnectionState(ServerConnectionStateArgs obj)
     {
         _serverState = obj.ConnectionState;
-        UpdateColor(obj.ConnectionState, ref _serverIndicator);
+//        UpdateColor(obj.ConnectionState, ref _serverIndicator);
     }
 
 
